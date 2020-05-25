@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CityGuide.API.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CityGuide.API.Controllers
 {
@@ -10,18 +12,28 @@ namespace CityGuide.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private DataContext _dataContext;
+
+        public ValuesController(DataContext dataContext)
+        {
+            this._dataContext = dataContext;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult> GetValues()
         {
-            return new string[] { "value1", "value2" };
+            var values = await _dataContext.Values.ToListAsync();
+            return Ok(values);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            return "value";
+            var value = await _dataContext.Values.SingleOrDefaultAsync(x => x.Id == id);
+
+            return Ok(value);
         }
 
         // POST api/values
