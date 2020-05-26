@@ -37,7 +37,7 @@ namespace CityGuide.API.Controllers
             //}).ToList();
 
             var cities = _appRepository.GetCities();
-            var citiesToReturn = _mapper.Map<List<CityForListDto>>(cities);          
+            List<CityForListDto> citiesToReturn = _mapper.Map<List<CityForListDto>>(cities);          
 
             return Ok(citiesToReturn);
         }
