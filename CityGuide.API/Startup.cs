@@ -35,6 +35,7 @@ namespace CityGuide.API
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors();
             services.AddScoped<IAppRepository, AppRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             // Start Registering and Initializing AutoMapper
             var mappingConfig = new MapperConfiguration(mc =>
             {
